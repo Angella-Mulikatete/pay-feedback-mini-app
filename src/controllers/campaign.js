@@ -1,7 +1,7 @@
 // const asyncHandler = require('express-async-handler');
 const Campaign = require('../models/Campaign');
 
-exports.getCampaigns = async(req, res) => {
+export const getCampaigns = async(req, res) => {
     const { category, minReward } = req.query;
 
     const filter = {};
@@ -14,15 +14,25 @@ exports.getCampaigns = async(req, res) => {
     res.json(campaigns);
 };
 
-exports.createCampaign = async(req, res) => {
-    const {title, description, rewardAmount, category} = req.body;
+export const createCampaign = async(req, res) => {
+    try{
+        // const {title, description, rewardAmount, category} = req.body;
 
-    const campaign = await Campaign.create({
-        title,
-        description,
-        rewardAmount,
-        category
-    });
+        const campaign = new Campaign(req.body);
+        await campaign.save();
 
-    res.status(200).json(campaign);
+        res.status(200).json(campaign);
+    }catch(err){
+        res.status(400).json(err)
+    }
+}
+
+export const getCampaignById = async(req, res) =>{
+    try{
+        const campaign = await Campaign.findById(req.params.id).populate('creator');
+        if (!campaign) return res.status(404).json({ message: 'Campaign not found' });
+        res.json(campaign);
+    }catch(err){
+        res.status(400).json(err)
+    }
 }
