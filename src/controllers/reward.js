@@ -8,7 +8,7 @@ export const issueReward = async (req, res) => {
     await reward.save();
     res.status(201).json(reward);
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json( err );
   }
 };
 
@@ -17,6 +17,6 @@ export const getUserRewards = async (req, res) => {
     const rewards = await Reward.find({ user: req.params.userId }).populate('campaign');
     res.json(rewards);
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json( err );
   }
 };
