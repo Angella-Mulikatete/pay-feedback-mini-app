@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const FeedbackSchema = new mongoose.Schema({
-    userId:{
+    user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    campaignId:{
+    campaign:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Campaign',
         required: true
@@ -19,6 +19,13 @@ const FeedbackSchema = new mongoose.Schema({
         type: Number,
         min: 1,
         max: 5
+    },
+    onchainTxHash: {
+        type: String // if proof-of-feedback is store onchain
+    },
+    pointsEarned:{
+        type: Number,
+        default: 0
     },
     createdAt: {
         type: Date,
