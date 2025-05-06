@@ -12,15 +12,21 @@ exports.getUser = async(req , res) => {
     res.json(user);
 }
 
-exports.createUser = async(req, res) => {
-    const {username, points, badges, lastActivity} = req.body;
+export const createUser = async(req, res) => {
+   try{
+    const {walletaddress, username, profileImage, socialHandle} = req.body;
 
-    const user = await User.create({
+    const newUser = await User.create({
+        walletaddress,
         username,
-        points,
-        badges,
-        lastActivity
+        profileImage,
+        socialHandle
     });
 
-    res.status(200).json(user);
+    await newUser.save()
+
+    res.status(201).json(newUser);
+   }catch(err){
+    res.status(400).json(err);
+   }
 }

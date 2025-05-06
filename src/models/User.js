@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
         type: String
     },
 
+    socialHandle:{
+        type: String
+    }, //warpcast username
+
     points:{
         type: Number,
         default: 0
