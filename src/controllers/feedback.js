@@ -27,3 +27,12 @@ exports.submitFeedback = async(req, res ) => {
     res.status(400).json(err)
    }
 }
+
+export const getFeedbackForCampaign = async (req, res) => {
+    try {
+      const feedbacks = await Feedback.find({ campaign: req.params.id }).populate('user');
+      res.json(feedbacks);
+    } catch (err) {
+      res.status(500).json({ error: err });
+    }
+  };
