@@ -4,13 +4,16 @@ const User = require('../models/User');
 const Feedback = require('../models/Feedback');
 
 exports.submitFeedback = async(req, res ) => {
-    const {userId, campaignId, feedbackText, rating} = req.body
+   try{
+    const {userId, campaignId, feedbackText, rating, pointsEarned, onchainTxHash} = req.body
 
     const feedbacks = await Feedback.create({
         userId,
         campaignId,
         feedbackText,
-        rating
+        rating,
+        pointsEarned, 
+        onchainTxHash
     });
 
     //update user points
@@ -20,4 +23,7 @@ exports.submitFeedback = async(req, res ) => {
     });
 
     res.status(201).json(feedbacks);
+   }catch(err){
+    res.status(400).json(err)
+   }
 }
