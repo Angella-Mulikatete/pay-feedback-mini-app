@@ -14,19 +14,37 @@ exports.getUser = async(req , res) => {
 
 export const createUser = async(req, res) => {
    try{
-    const {walletaddress, username, profileImage, socialHandle} = req.body;
+        const {walletaddress, username, profileImage, socialHandle} = req.body;
 
-    const newUser = await User.create({
-        walletaddress,
-        username,
-        profileImage,
-        socialHandle
-    });
+        const newUser = await User.create({
+            walletaddress,
+            username,
+            profileImage,
+            socialHandle
+        });
 
-    await newUser.save()
+        await newUser.save()
 
-    res.status(201).json(newUser);
+        res.status(201).json(newUser);
    }catch(err){
     res.status(400).json(err);
    }
+}
+
+export const getUserByWallet = async(req, res) =>{
+    try{
+
+        const user = await User.findOne(req.params.wallet);
+        if(!user){
+            res.status(404);
+            throw new Error('User not found');
+        }
+    
+        res.json(user);
+        
+    }catch(error){
+        res.status(400).json({
+            error
+        })
+    }
 }
