@@ -45,3 +45,19 @@ exports.listCampaigns = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.closeCampaign = async(req, res) => {
+    try{
+        const campaign = await Campaign.findById(req.params.id);
+
+        if(!campaign) return res.status(404).json({ message: 'Campaign not found' });
+
+        if(campaign.createdBy.toString()!= req.user.id) return res.status(403).json({ message: 'Forbidden' });
+
+        campaign.active = false;
+        await campaign.save();
+        res.json({message: 'Campaign Closed'})
+    }catch(err){
+        res.status(500).json({ message: err.message });
+    }
+}
