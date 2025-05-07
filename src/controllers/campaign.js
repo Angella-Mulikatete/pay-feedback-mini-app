@@ -36,3 +36,12 @@ export const getCampaignById = async(req, res) =>{
         res.status(400).json(err)
     }
 }
+
+exports.listCampaigns = async (req, res) => {
+    try {
+        const campaigns = await Campaign.find({ active: true }).populate('createdBy', 'username');
+        res.json(campaigns);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
