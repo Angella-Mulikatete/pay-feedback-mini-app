@@ -3,7 +3,7 @@ const User = require('../models/User');
 
 const client = new NeynarAPIClient(process.env.NEYNAR_API_KEY);
 
-const publishFeedbackCast = async(userId, content) =>{
+exports.publishFeedbackCast = async(userId, content) =>{
 
     const user = await User.findById(userId);
 
@@ -11,6 +11,9 @@ const publishFeedbackCast = async(userId, content) =>{
 
     const castText = `Feedback submitted,: ${content}`;
 
-    await client.publishCast({})
+    await client.publishCast({
+        signerUuid: process.env.NEYNAR_SIGNER_UUID,
+        text: castText
+    });
 
 }

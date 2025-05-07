@@ -2,6 +2,7 @@
 //const Campaign = require('../models/Campaign');
 const User = require('../models/User');
 const Feedback = require('../models/Feedback');
+const {publishFeedbackCast} = require('../services/farcasterService')
 
 exports.submitFeedback = async(req, res ) => {
    try{
@@ -21,6 +22,8 @@ exports.submitFeedback = async(req, res ) => {
         $inc: {points:10 },
         $set: { lastActivity : new Date()}
     });
+
+    await publishFeedbackCast(userId, feedbackText);
 
     res.status(201).json(feedbacks);
    }catch(err){
