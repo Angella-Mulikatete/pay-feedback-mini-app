@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
+    fid:{
+        type: Number,
+        unique: true
+    },
     walletaddress:{
         type:String,
         required: true,
