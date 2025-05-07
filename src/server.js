@@ -28,6 +28,8 @@ app.use('/api/feedback', require('./routes/feedback'));
 app.use('/api/users', require('./routes/user'));
 app.use('/api/rewards', require('./routes/reward'));
 app.use('/api/badges', require('./routes/badge'));
+app.use('/api/export', require('./routes/exportRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 
 app.get('/', (req, res) => {
     res.status(200).json({ message: 'API is running' });
