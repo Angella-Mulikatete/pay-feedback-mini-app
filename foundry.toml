@@ -2,5 +2,7 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+[rpc_endpoints]
+baseSepolia = "https://base-sepolia.g.alchemy.com/v2/rSsmSu5x_pPVJxKXZrK3PTlZrm7c0JpP"
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
